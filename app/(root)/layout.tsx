@@ -1,3 +1,4 @@
+import "../globals.css";
 
 export default function RootLayout({
   children,
@@ -5,7 +6,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-   <main>
+   <main >
       SIDEBAR
       {children}
    </main>
