@@ -20,11 +20,14 @@ const Home = () => {
       </header>
         page
       </div>
-       <TotalBalanceBox 
+      <div className='w-full bg-black-2 h-full'>
+        <TotalBalanceBox 
        accounts={[]}
        totalBanks={1}
        totalCurrentBalance={1250.35}
        />
+      </div>
+       
     </section>
     
   )
