@@ -1,26 +1,34 @@
+"use client"
 import { sidebarLinks } from '@/constants';
 import React from 'react'
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
+import { usePathname } from 'next/navigation';
+import { it } from 'node:test';
 
-const SideBar = ({user}:SidebarProps): JSX.Element => { 
+
+const SideBar = ({user}:SidebarProps): JSX.Element => {
+
+
 return (
-<aside className='sidebar'>
-    <Link href={'./'}>
-        <Image src={''} alt=''/>
-        <p></p>
-     
-    </Link>
-    <nav>
+<aside className='sidebar max-sm:hidden'> 
+    <nav className='flex flex-col gap-4'>
+        <Link href={'./'} className='mb-12 cursor-pointer
+        items-center gap-2' >
+            <Image src={'/icons/logo.svg'} alt='Site Name' width={32} height={32}/>
+        </Link>
        {sidebarLinks.map((item)=>{
+        const pathName = usePathname()
+        const isActive = ()=>{
+           return (pathName===item.route || pathName.startsWith(`${item.route}`))
+            }
+            console.log(isActive())
         return (
-        <Link href={item.route} className='flex'>
-            <Image src={item.imgURL} alt='' width={32} height={32}/>
-            <p className={cn()}>{item.label}vv</p>
+        <Link href={item.route} className='' key={item.label}>
+            <p className={cn( 'sidebar-link',{"bg-bank-gradient":isActive()})}>{item.label}</p>
         </Link>)
        })} 
-        <p>ddd</p>
     </nav>
 </aside>
 

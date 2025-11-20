@@ -1,5 +1,8 @@
+import MobileNavBar from "@/components/ui/MobileNavBar";
 import "../globals.css";
 import SideBar from "@/components/ui/SideBar"
+import Image from "next/image";
+
 
 
 export default function RootLayout({
@@ -23,8 +26,15 @@ export default function RootLayout({
  
   }
   return (
-   <main className="flex sm:flex ">
+   <main className="flex max-sm:flex-col ">
+     
+        <div className="hidden justify-between px-2 max-sm:flex">
+          <Image src={'/icons/logo.svg'} width={14}
+           height={14}/>
+          <MobileNavBar user={loggedIn}/>
+        </div>
       <SideBar user={loggedIn}/>  
+  
       {children}
    </main>
   );
