@@ -1,6 +1,4 @@
-import MobileNavBar from "@/components/ui/MobileNavBar";
 import "../globals.css";
-import SideBar from "@/components/ui/SideBar"
 import Image from "next/image";
 
 
@@ -26,16 +24,16 @@ export default function RootLayout({
  
   }
   return (
-   <main className="flex max-sm:flex-col ">
-     
-        <div className="hidden justify-between px-2 max-sm:flex">
-          <Image src={'/icons/logo.svg'} width={14}
-           height={14} alt=""/>
-          <MobileNavBar user={loggedIn}/>
-        </div>
-      <SideBar user={loggedIn}/>  
-  
-      {children}
+   <main className="flex flex-col h-screen bg-blue-300 items-center
+   justify-center">
+        <div className="flex">
+        <Image src={'/icons/logo.svg'} alt="" 
+         width={32} height={32}/>
+         <p className="font-bold">Horizon</p>
+    </div>
+    <div>
+        {children}
+    </div>  
    </main>
   );
 }

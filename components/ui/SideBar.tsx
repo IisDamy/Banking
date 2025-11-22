@@ -18,7 +18,8 @@ return (
         items-center gap-2' >
             <Image src={'/icons/logo.svg'} alt='Site Name' width={32} height={32}/>
         </Link>
-       {sidebarLinks.map((item)=>{
+        <div className='text-center gap-2 flex flex-col'>
+            {sidebarLinks.map((item)=>{
         const pathName = usePathname()
         const isActive = ()=>{
            return (pathName===item.route || pathName.startsWith(`${item.route}`))
@@ -26,9 +27,11 @@ return (
             console.log(isActive())
         return (
         <Link href={item.route} className='' key={item.label}>
-            <p className={cn( 'sidebar-link',{"bg-bank-gradient":isActive()})}>{item.label}</p>
+            <p className={cn( 'sidebar-link text-black-1 font-bold',{"text-white bg-bank-gradient":isActive()})}>{item.label}</p>
         </Link>)
        })} 
+        </div>
+       
     </nav>
 </aside>
 

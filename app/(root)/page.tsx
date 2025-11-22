@@ -1,13 +1,25 @@
 import React from 'react'
 import HeaderBox from '@/components/ui/HeaderBox';
 import TotalBalanceBox from '@/components/ui/totalBalanceBox';
+import RightSideBar from '@/components/RightSideBar';
 
 
 const Home = () => {
-  const loggedIn = { firstName:"Damy" }; // to be replaced with actual auth logic
+  const loggedIn = { firstName:"Damy",lastName: "Owoade",
+    email:"wubadubdub@gmail.com",
+    $id: 'string',
+  userId: 'string',
+  dwollaCustomerUrl: 'string',
+  dwollaCustomerId: 'string',
+  address1: 'string',
+  city: 'string',
+  state: 'string',
+  postalCode: '',
+  dateOfBirth: "'string'",
+  ssn: "'string'", }; // to be replaced with actual auth logic
   
   return (
-    <section className='home'>
+    <section className='home flex-row'>
       <div className='home-content'>
         <header className='home-header'>
         <HeaderBox 
@@ -17,7 +29,6 @@ const Home = () => {
         subtext="Access and manage your account and transactions efficiently"
         />
       </header>
-      </div>
       <div className='w-full  h-full'>
         <TotalBalanceBox 
        accounts={[]}
@@ -25,7 +36,8 @@ const Home = () => {
        totalCurrentBalance={1250.35}
        />
       </div>
-       
+      </div>
+      <RightSideBar user={loggedIn} banks={[]} transactions={[]}/>
     </section>
     
   )
