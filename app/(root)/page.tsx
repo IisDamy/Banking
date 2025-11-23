@@ -1,7 +1,7 @@
 import React from 'react'
 import HeaderBox from '@/components/ui/HeaderBox';
 import TotalBalanceBox from '@/components/ui/totalBalanceBox';
-import RightSideBar from '@/components/RightSideBar';
+import RightSideBar from '@/components/ui/RightSideBar';
 
 
 const Home = () => {
@@ -16,8 +16,17 @@ const Home = () => {
   state: 'string',
   postalCode: '',
   dateOfBirth: "'string'",
-  ssn: "'string'", }; // to be replaced with actual auth logic
-  
+  ssn: "'string'", };
+   // to be replaced with actual auth logic
+  const bank1 = 
+    { $id: 'string',
+  accountId: 'string',
+  bankId: 'string',
+  accessToken: 'string',
+  fundingSourceUrl: 'string',
+  userId: 'string',
+  sharableId: 'string'}
+
   return (
     <section className='home flex-row'>
       <div className='home-content'>
@@ -37,7 +46,7 @@ const Home = () => {
        />
       </div>
       </div>
-      <RightSideBar user={loggedIn} banks={[]} transactions={[]}/>
+      <RightSideBar user={loggedIn} banks={[{},{}]} transactions={[]}/>
     </section>
     
   )

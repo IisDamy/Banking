@@ -29,8 +29,8 @@ export default function RootLayout({
    <main className="flex max-sm:flex-col ">
      
         <div className="hidden justify-between px-2 max-sm:flex">
-          <Image src={'/icons/logo.svg'} width={14}
-           height={14} alt=""/>
+          <Image src={'/icons/logo.svg'} width={30}
+           height={30} alt=""/>
           <MobileNavBar user={loggedIn}/>
         </div>
       <SideBar user={loggedIn}/>  

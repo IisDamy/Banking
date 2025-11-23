@@ -24,9 +24,10 @@ export default function RootLayout({
  
   }
   return (
-   <main className="flex flex-col h-screen bg-blue-300 items-center
+   <main className="flex flex-col h-screen items-center
    justify-center">
         <div className="flex">
+            
         <Image src={'/icons/logo.svg'} alt="" 
          width={32} height={32}/>
          <p className="font-bold">Horizon</p>

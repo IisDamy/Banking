@@ -18,51 +18,67 @@ import { cn } from '@/lib/utils'
 import { usePathname } from 'next/navigation'
 
 
-const MobileNavBar = ({user}:MobileNavProps) => {
-  return (
-    <div className='p-4  '>
-        <Sheet >
-      <SheetTrigger asChild className='cursor-pointer'>
-        <Image src={'/icons/hamburger.svg'} alt='' height={16}
-        width={16}/>
-      </SheetTrigger>
 
-      <SheetContent className='hidden max-sm:flex' >
-      <Link href={'/'}>
-        <h1 className='text-26 font-ibm-plex-serif font-bold
-      text-black-1'>
-        Horizon
-      </h1>
-        
-      </Link>
-        <div className='flex flex-col gap-4'>
-            {sidebarLinks.map((item)=>{
-        const pathName = usePathname()
-        const isActive = ()=>{
-           return (pathName===item.route || pathName.startsWith(`${item.route}`))
-            }
-            console.log(isActive())
-        return (
-        <Link href={item.route}  key={item.label} >
-          <div className={cn('relative size-6 w-full ', {"brightness-[3] bg-bank-gradient":isActive()})}>
-            <Image src={item.imgURL} fill  alt=''
-             className={''}/>
-          </div>
-            
-       
-        </Link>)
-       })} 
+const MobileNavBar = ({user}:MobileNavProps) => {
+  const pathname = usePathname()
+
+ return(
+  <section className=' max-w-[264px]'>
+    <Sheet >
+    <SheetTrigger className=''>
+        <Image src={'/icons/hamburger.svg'}
+        width={30}
+        height={30}
+        alt='menu'
+        className='cursor-pointer '/>
+    </SheetTrigger>
+
+    <SheetContent className='border-none bg-white'>
+         <Link href={'/'} className='flex items-center gap-2'>
+          <Image 
+          src={'/icons/logo.svg'}
+          width={34} 
+          height={34} 
+          alt='Hoeizon logo' />
+          <h1 className='text-26 font-ibm-plex-serif font-bold text-black-1'>
+            Horizon
+          </h1>
+        </Link>
+        <div className='mobilenav-sheet'>
+          <SheetClose asChild>
+            <nav className='flex h-full flex-col gap-6 pt-16 text-white'>
+              {
+              sidebarLinks.map((item)=>{
+              const isActive = pathname === item.route || pathname.startsWith(`${item.route}`)
+                return (
+                  <SheetClose asChild key={item.route}>
+                  <Link href={item.route} key={item.label}
+                    className={cn('sidebar-link',{'bg-bank-gradient':isActive})}>
+                      <div className='relative size-6'>
+                      <Image 
+                        src={item.imgURL}
+                        alt={item.label}
+                        fill
+                        className={cn({'brightness-[3] invert-0': isActive})}/>
+                        </div>
+                        <p className={cn('sidebar-label',
+                            {'!text-white': isActive})}>
+                              {item.label}
+                        </p>
+                  </Link>
+                  </SheetClose>
+                      )
+                  })
+              }
+            </nav>
+          </SheetClose>
         </div>
-          <div>
-            dsds
-          </div>
-      </SheetContent>
-      <SheetClose asChild>
-        
-      </SheetClose>
-    </Sheet>
-    </div>
-  )
+    </SheetContent>
+   </Sheet>
+  </section>
+  
+ )
+   
 }
 
 export default MobileNavBar
