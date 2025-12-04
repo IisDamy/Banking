@@ -2,21 +2,11 @@ import React from 'react'
 import HeaderBox from '@/components/ui/HeaderBox';
 import TotalBalanceBox from '@/components/ui/totalBalanceBox';
 import RightSideBar from '@/components/ui/RightSideBar';
+import { getLoggedInUser } from '@/lib/Server/ACTIONS/user.actions';
 
+const Home = async() => {
 
-const Home = () => {
-  const loggedIn = { firstName:"Damy",lastName: "Owoade",
-    email:"wubadubdub@gmail.com",
-    $id: 'string',
-  userId: 'string',
-  dwollaCustomerUrl: 'string',
-  dwollaCustomerId: 'string',
-  address1: 'string',
-  city: 'string',
-  state: 'string',
-  postalCode: '',
-  dateOfBirth: "'string'",
-  ssn: "'string'", };
+  const loggedIn = await getLoggedInUser();
    // to be replaced with actual auth logic
   const bank1 = 
     { $id: 'string',
@@ -29,7 +19,7 @@ const Home = () => {
 
   return (
     <section className='home flex-row'>
-      <div className='home-content'>
+      <div className='home-content '>
         <header className='home-header'>
         <HeaderBox 
         type="greeting" 

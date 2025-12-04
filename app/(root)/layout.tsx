@@ -10,6 +10,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   const loggedIn  = {firstName:"Damy", lastName: "Owoade",
     email:"wubadubdub@gmail.com",
     $id: 'string',
@@ -22,8 +23,6 @@ export default function RootLayout({
   postalCode: '',
   dateOfBirth: "'string'",
   ssn: "'string'",
-    
- 
   }
   return (
    <main className="flex max-sm:flex-col ">

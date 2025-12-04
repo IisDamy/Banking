@@ -11,7 +11,7 @@ const RightSideBar = ({user, banks, transactions}:RightSidebarProps) => {
             <div className='profile-img'>
                 <span className='text-5xl font-bold 
             text-blue-500'>
-                {user.firstName[0]}
+                {user.firstName}
                 </span>
             </div>
 

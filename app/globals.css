@@ -1,6 +1,32 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+/* Appwrite styling */
+/* src/app/globals.css */
+/*@import "@appwrite.io/pink";
+@import "@appwrite.io/pink-icons"; */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  background: hsl(var(--color-neutral-50));
+}
+
+.dark body {
+  background: hsl(var(--color-neutral-900));
+}
+
 
 * {
   margin: 0;
@@ -110,7 +136,7 @@
   }
 
   .home-content {
-    @apply no-scrollbar flex w-full flex-1 flex-col gap-8 px-5 sm:px-8 py-7 bg-blue-25 lg:py-12 xl:max-h-screen xl:overflow-y-scroll;
+    @apply no-scrollbar flex w-full flex-1 flex-col gap-8 px-5 sm:px-8 py-7 lg:py-12 xl:max-h-screen xl:overflow-y-scroll;
   }
 
   .home-header {

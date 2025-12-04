@@ -1,12 +1,20 @@
-import { ArticleForm } from '@/components/ui/ArticleForm'
+
+import { AuthForm} from '@/components/ui/AuthForm'
 import React from 'react'
+import { getLoggedInUser } from '@/lib/Server/ACTIONS/user.actions'
+
+
 
 const SIGN_IN = () => {
+
+const LoggedIn = getLoggedInUser()
+
+
   
   return (
-    <div className=''>
+    <div className='w-full '>
        <p>
-        <ArticleForm type={'sign-in'}/>
+        <AuthForm type={'sign-in'}/>
       </p> 
     </div>
   )
