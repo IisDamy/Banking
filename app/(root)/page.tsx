@@ -6,7 +6,19 @@ import { getLoggedInUser } from '@/lib/Server/ACTIONS/user.actions';
 
 const Home = async() => {
 
-  const loggedIn = await getLoggedInUser();
+  const loggedIn =  {firstName:"Damy", lastName: "Owoade",
+    email:"wubadubdub@gmail.com",
+    $id: 'string',
+  userId: 'string',
+  dwollaCustomerUrl: 'string',
+  dwollaCustomerId: 'string',
+  address1: 'string',
+  city: 'string',
+  state: 'string',
+  postalCode: '',
+  dateOfBirth: "'string'",
+  ssn: "'string'",
+  };
    // to be replaced with actual auth logic
   const bank1 = 
     { $id: 'string',

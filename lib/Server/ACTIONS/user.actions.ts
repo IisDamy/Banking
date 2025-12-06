@@ -13,16 +13,15 @@ import { parseVersionInfo } from "next/dist/server/dev/parse-version-info";
 
 export async function signIn({email, password}:signInProps){
 try{
- const { account } = await createSessionClient();
+ const { account } = await createSessionClient({ allowUnauthenticated: true });
  const response = await account.createEmailPasswordSession({
     email,
     password
   });
-  console.log(response)
-  return parseStringify(response)
-  }
-
-   catch (error) {
+  
+    return parseStringify(response);
+  } catch (error) {
+    console.error("signIn error:", error);
     return null;
   }
 }
@@ -30,12 +29,11 @@ try{
 
 export async function signOut(){
 try{
-  const { account } = await createSessionClient();
+   const { account } = await createSessionClient();
+   cookies().delete("banking-app-session");
+   await account.deleteSession({ sessionId: "current" });
 
-  cookies().delete("banking-app-session");
-  await account.deleteSession({ sessionId: "current" });
-
-  redirect("/sign-up");
+  redirect("/sign-in");
 }
 catch(error){
 
@@ -43,42 +41,43 @@ catch(error){
 }
 
 export const signUp = async (userData:SignUpParams)=>{
-  const email = userData.email
-  const password = userData.password
+const email = userData.email
+const password = userData.password
+const name = `${userData.firstName} ${userData.lastName}`
 try{
-  const { account, database } = await createAdminClient();
+
+  const { account, databases, user } = await createAdminClient();
 
  const newUser =  await account.create({
   userId: ID.unique(),
-  name: `${userData.firstName} ${userData.lastName}`,
-  ...userData
+  name,
+  email,
+  password
   });
   const session = await account.createEmailPasswordSession({
-    email,
+    email,   
     password
   });
-
-  const promise = database.createRow({
-    databaseId:'',
-    tableId:'',
-    rowId:'',
-    data:{
-
-    }
-
-  })
-
-  promise.then(function(response){
-    console.log(response)
-  })
-
+  
   cookies().set("banking-app-session", session.secret, {
     path: "/",
     httpOnly: true,
     sameSite: "strict",
     secure: true,
   });
- return parseStringify(newUser)
+  
+  await databases.createRow({
+     databaseId: '692ccf69002fc172718d',
+    tableId: '<TABLE_ID>',
+    rowId: newUser.$id,
+    data: {userData}
+  })
+
+
+
+ const parseUser = parseStringify(newUser)
+   console.log(parseUser,'wwww')
+  return parseUser
 }
 catch(error){
 console.log(error)
@@ -90,9 +89,10 @@ console.log(error)
 
 export async function getLoggedInUser() {
   try {
-    const { account } = await createSessionClient();
+    const { account} = await createSessionClient();
     const loggedIn = await account.get();
-    return parseStringify(loggedIn)
+    const ParseloggedIn = parseStringify(loggedIn)
+    return ParseloggedIn
   } catch (error) {
     return null;
   }

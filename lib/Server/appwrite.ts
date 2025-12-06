@@ -2,18 +2,28 @@
 // src/lib/server/appwrite.js
 "use server";
 
-import { Client, Account, TablesDB } from "node-appwrite";
+import { Client, Account, Users, TablesDB } from "node-appwrite";
 import { cookies } from "next/headers";
 
-export async function createSessionClient() {
-  const client = new Client()
-    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
-    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT)
-    .setKey(process.env.NEXT_APPWRITE_KEY)
+export async function createSessionClient(options: { allowUnauthenticated?: boolean } = {}) {
+   const { allowUnauthenticated = false } = options;
 
-  const session = await cookies().get("banking-app-session");
-  if (!session || !session.value) {
-    throw new Error("No session");
+  const client = new Client()
+    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
+    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT!)
+
+    const session = await cookies().get("banking-app-session");
+
+  if (!session?.value) {
+    if (!allowUnauthenticated) {
+      throw new Error("No session");
+    }
+    // return client without session set so it can be used for sign-in
+    return {
+      get account() {
+        return new Account(client);
+      },
+    };
   }
 
   client.setSession(session.value);
@@ -27,9 +37,9 @@ export async function createSessionClient() {
 
 export async function createAdminClient() {
   const client = new Client()
-    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
-    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT)
-    .setKey(process.env.NEXT_APPWRITE_KEY);
+    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
+    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT!)
+    .setKey(process.env.NEXT_APPWRITE_KEY!);
 
 
 
@@ -37,8 +47,11 @@ export async function createAdminClient() {
     get account() {
       return new Account(client);
     },
-    get database(){
+    get databases(){
       return new TablesDB(client)
+    },
+    get user(){
+      return new Users(client)
     }
   };
 }

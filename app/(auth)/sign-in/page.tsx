@@ -5,9 +5,10 @@ import { getLoggedInUser } from '@/lib/Server/ACTIONS/user.actions'
 
 
 
-const SIGN_IN = () => {
+const SIGN_IN =async () => {
 
-const LoggedIn = getLoggedInUser()
+const LoggedIn =await getLoggedInUser()
+console.log(LoggedIn)
 
 
   

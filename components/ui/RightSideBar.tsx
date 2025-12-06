@@ -50,6 +50,7 @@ const RightSideBar = ({user, banks, transactions}:RightSidebarProps) => {
                      </div>)
                 }
             </section>
+            
         </aside>
    
   )

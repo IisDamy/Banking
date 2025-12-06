@@ -32,20 +32,14 @@ import { cookies } from 'next/headers'
 
 
 export const AuthForm = ({type}:AuthFormProps) => {
-    const LoginSchema = z.object({
-  Email: z.string().email('Enter a valid email address'),
-  password: z.string().min(2, 
-   { message: "Name must be at leat 2 characters"}
-  )})
-
 
    const formSchema = z.object({
     email: z.string().email('Enter a valid email address'),
   firstName: z.string().min(2, {message:"Name must contain at least 2 characters"}),
   lastName: z.string().min(2, {message:"Name must contain at least 2 characters"}),
-  password: z.string().min(4, 
-   { message: "Password must be more than 4 characters"}
-  ),
+  password: z.string().min(8, 
+   { message: "Password must be at least 8 characters and should not be commonly used"}
+  ).max(20),
   address: z.string().min(4),
   state: z.string(),
   postalCode: z.string(),
@@ -56,8 +50,8 @@ export const AuthForm = ({type}:AuthFormProps) => {
 })
 
 
- const [user, setUser]= useState()
- const [isLoading, setIsLoading] = useState(false)
+const [user, setUser]= useState(null)
+const [isLoading, setIsLoading] = useState(false)
 const router = useRouter()
  
 
@@ -66,7 +60,7 @@ const form = useForm<z.infer<typeof formSchema>>({
   resolver: zodResolver(formSchema),
   defaultValues: {
     email: "toby@gmail.com",
-    password: '1234',
+    password: '12345',
     address:"tobital",
     state:'tobiton',
     firstName:'tody',
@@ -83,26 +77,28 @@ const form = useForm<z.infer<typeof formSchema>>({
 
  const onSubmit = async (data: z.infer<typeof formSchema>) =>{
     setIsLoading(true)
-    
-    
     // Do something with the form values.
     try{
       //sign up brah usign appwrite & create plaid token
     if(type==='sign-up'){
     const newUser = await signUp(data)
-
-    if(newUser){
-      setUser(newUser)
-    console.log(user)
-      router.push('/')
+      
+    if(newUser) {
+    setUser(newUser)
     }
+        
+    
+  
     }
-
+    
     if(type==='sign-in'){
-      const response = await signIn(data)
+      const response = await signIn({
+        email:data.email,
+        password: data.password
+      })
       if(response){
         router.push('/')
-        console.log(response, 'nut')
+
       }
     }
     }
@@ -152,7 +148,7 @@ const form = useForm<z.infer<typeof formSchema>>({
             </div>
 
 
-      <FieldGroup className=''>
+      {!user && <FieldGroup className=''>
         {type==='sign-up'&& <>
           <div className='grid grid-cols-2 gap-4 '>
             <Controller control={form.control} name={'firstName'} render={({ field, fieldState }) => {
@@ -328,8 +324,8 @@ const form = useForm<z.infer<typeof formSchema>>({
               </> }     
 
 
-                  
-    <Controller control={form.control} name={'email'} render={({ field, fieldState }) => { 
+    
+      <Controller control={form.control} name={'email'} render={({ field, fieldState }) => { 
                 return (<Field data-invalid={fieldState.invalid}>
                             <FieldContent>
                               <FieldLabel htmlFor="form-rhf-auth-Email">
@@ -365,17 +361,14 @@ const form = useForm<z.infer<typeof formSchema>>({
                 />
                    
                   {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
+                    <FieldError errors={[fieldState.error]} className='text-red-800' />
                   )}
                     </FieldContent>
                 </Field>
                     )
                     }}/>
-
-
-  
           
-  </FieldGroup>
+  </FieldGroup>}
   </div>
 </FieldSet>}
 <Field orientation={'horizontal'} >

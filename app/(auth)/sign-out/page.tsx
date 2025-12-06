@@ -1,8 +1,16 @@
 import React from 'react'
+import { signOut } from '@/lib/Server/ACTIONS/user.actions'
+const SIGN_OUT = async () => {
 
-const SIGN_OUT = () => {
   return (
-    <div>page</div>
+    <div>
+      <p>
+        <button onClick={signOut}>
+            Sign Out
+        </button>
+        
+      </p>
+    </div>
   )
 }
 
